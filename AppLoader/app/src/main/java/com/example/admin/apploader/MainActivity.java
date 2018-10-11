@@ -19,9 +19,12 @@ public class MainActivity extends AppCompatActivity {
     private Button saveUrlBtn;
     private ListView applications;
     private MainListener listener;
+    private Mainhandler mainhandler;
 
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
+
+    private AppInfo[] appInfos=null;
 
 
     private String defaultUrl="http://192.168.10.16:8080/phpbin/applications.php";
@@ -61,9 +64,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setListener(){
-        listener=new MainListener(serverUrl,applications,this);
+        mainhandler=new Mainhandler(MainActivity.this);
+        listener=new MainListener(serverUrl,applications,this,mainhandler);
         connectBtn.setOnClickListener(listener);
         saveUrlBtn.setOnClickListener(listener);
+        applications.setOnItemClickListener(listener);
     }
 
     public void setDefaultUrl(){
@@ -72,7 +77,23 @@ public class MainActivity extends AppCompatActivity {
         editor.commit();
     }
 
+    public EditText getServerUrl() {
+        return serverUrl;
+    }
+
+    public void setAppInfos(AppInfo[] appInfos) {
+        this.appInfos =new AppInfo[appInfos.length];
+        for(int i=0;i<appInfos.length;++i){
+            this.appInfos[i]=appInfos[i];
+        }
+    }
+
+    public AppInfo[] getAppInfos() {
+        return appInfos;
+    }
+
     public void listApps(AppInfo[] appsInfo){
+        setAppInfos(appsInfo);
         applications.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1,getData(appsInfo)));
     }
 
