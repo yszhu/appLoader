@@ -1,11 +1,16 @@
 package com.example.admin.apploader;
 
+import android.os.Bundle;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 
@@ -67,7 +72,11 @@ public class MainListener implements View.OnClickListener , AdapterView.OnItemCl
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                handler.sendMessage(new Message());
+                    Message message=new Message();
+                    Bundle data=new Bundle();
+                    data.putString("data",response.body().string());
+                    message.setData(data);
+                    handler.sendMessage(message);
             }
         });
     }
