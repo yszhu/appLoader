@@ -1,6 +1,7 @@
 package com.example.admin.apploader;
 
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
@@ -85,5 +86,26 @@ public class MainListener implements View.OnClickListener , AdapterView.OnItemCl
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Toast.makeText(context,context.getAppInfos()[position].getUrl(),Toast.LENGTH_SHORT).show();
+    }
+
+    private void downloadApp(String url,String name){
+        OkHttpClient okHttpClient=new OkHttpClient();
+        Request request=new Request.Builder().url(url).build();
+        Call call=okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+
+            }
+        });
+    }
+    private String getStoragePath(){
+        String path="";
+        return path;
     }
 }
