@@ -128,7 +128,7 @@ public class MainListener implements View.OnClickListener , AdapterView.OnItemCl
     }
 
     private File createFile(String fileName){
-        File patent = Environment.getExternalStorageDirectory();
+        String patent = Environment.getExternalStorageDirectory()+"/apps/";
         File file=new File(patent,fileName);
         return file;
     }
